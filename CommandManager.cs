@@ -9,8 +9,9 @@ public static class CommandManager
     {
         cmd.Do();
         done.Push(cmd);
+        undone.Clear();
     }
-    
+
     public static void Undo()
     {
         if (done.Count > 0)
@@ -23,9 +24,11 @@ public static class CommandManager
 
     public static void Redo()
     {
-        if(undone.Count > 0)
+        if (undone.Count > 0)
         {
-            Do(undone.Pop());
+            Command cmd = undone.Pop();
+            cmd.Do();
+            done.Push(cmd);
         }
     }
 }
